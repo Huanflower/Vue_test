@@ -1,0 +1,13 @@
+export default {
+    template: `
+        <div style="background-color: hotpink; height: 150px">
+            头部
+        </div>
+         <div style="background-color: yellowgreen; height: 300px">
+            中部
+        </div>
+        <div style="background-color: skyblue; height: 150px">
+            底部
+        </div>
+    `
+}

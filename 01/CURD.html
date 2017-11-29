@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>列表增删改查</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="text/javascript" src="./vue.js"></script>
+    <script type="text/javascript">
+        //启动
+        new Vue({
+            el: '#app',
+            template: `
+                <div>
+                    <!--列表功能-->
+                    <div>
+                        <ul>
+                            <li v-for="(music,index) in musics" :key="index":style="'background-color:'+ (index%2==0?'yellow':'orange') ">{{music.id}} {{music.name}}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!--添加功能-->
+                    <div style="background-color: pink;">
+                        ID:<input type="text" v-model="addId" />
+                        歌名:<input type="text" v-model="addName" />
+                         <button @click="addMusic">添加音乐</button>
+                    </div>
+
+                    <!--更改功能-->
+                    <div style="background-color: yellow;">
+                        ID:<input type="text" v-model="updateId" />
+                        歌名:<input type="text" v-model="updateName" />
+                         <button @click="updateMusic">更新音乐</button>
+                    </div>
+
+                    <!--删除功能-->
+                    <div style="background-color: skyblue;">
+                        ID:<input type="text" v-model="delId" />
+                         <button @click="delMusic(delId)">删除音乐</button>
+                    </div>
+
+                </div>
+            `,
+            methods: {
+                //添加音乐
+                addMusic: function () {
+                    this.musics.push({
+                        id: this.addId,
+                        name: this.addName
+                    });
+                    //清空添加
+                    this.addId = '';
+                    this.addName = '';
+                },
+                //更新音乐
+                updateMusic: function () {
+                    //获取要跟新的id
+                    var music = this.musics.find(ele => ele.id == this.updateId);
+                    if (!music) {
+                        alert('没有找到该音乐');
+                        return
+                    }
+                    music.name = this.updateName;
+                    //清空添加
+                    this.updateId = '';
+                    this.updateName = '';
+                },
+
+                delMusic: function (id) {
+                    var index = this.musics.findIndex(ele => ele.id == id);
+                    if (index == -1) {
+                        alert('没有找到该音乐');
+                        return
+                    }
+                    //删除元素
+                    this.musics.splice(index, 1);
+                    //清空添加
+                    this.delId = '';
+                }
+            },
+            data: function () {
+                return {
+                    musics: [{
+                        id: 1,
+                        name: '告白气球'
+                    }, {
+                        id: 2,
+                        name: '我会留在你身边'
+                    }, {
+                        id: 3,
+                        name: '化身孤岛的鲸'
+                    }, {
+                        id: 4,
+                        name: '疯人愿'
+                    }, ],
+                    addId: '',
+                    addName: '',
+                    updateId: '',
+                    updateName: '',
+                    delId: '',
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

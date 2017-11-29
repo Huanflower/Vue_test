@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/javascript" src="./vue.js"></script>
+    <script type="text/javascript">
+        var Myshow = {
+            template: `
+                <div style="background-color: yellow;">
+                    <h1>{{title}}</h1>
+                </div>
+            `,
+            props: ['title'],
+            data: function(){
+                return{
+                    text: 'def'
+                }
+            }
+        }
+        var App = {
+
+            components: {
+                'my-show':Myshow
+            },
+           template: `
+            <div>
+                <my-show title="欢迎加入无脸集团"></my-show>
+                <my-show v-bind:title = "text"></my-show>
+            </div>
+           `,
+           data: function(){
+               return {
+                   text: '没问题'
+               }
+           }
+        };
+        //启动
+        new Vue ({
+            el: '#app',
+            render: c=>c(App)
+        });
+    </script>
+</body>
+</html>

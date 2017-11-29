@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/javascript" src="./vue.js"></script>
+    <script type="text/javascript">
+        //公共组件
+        var Cal = {
+            template:`
+                <div style="background-color: skyblue;">
+                欢迎进入{{calTitle}}计算器: <br/>
+                <input type="text" v-model="n1"/>
+                <input type="text" v-model="n2"/>
+                <button @click="sum">{{calTitle}}计算</button>
+                {{result}}
+                </div>
+            `,
+            props: ['calTitle'],
+            data: function(){
+                return {
+                    n1: '',
+                    n2: '',
+                    result: ''
+                }
+            },
+            methods: {
+              sum: function(){
+                  this.result = (this.calTitle + '计算结果是：') + ((this.n1-0) + (this.n2-0));
+              }   
+            }
+        };
+
+        Vue.component('cal',Cal);
+
+
+        var XinLang = {
+            template: `
+                <div style= "background-color: hotpink;">
+                我是{{title}}
+                <cal :calTitle="title"></cal>
+                </div>
+            `,
+            data: function(){
+                return {
+                    title: '新浪'
+                }
+            }
+        }
+
+        var BaiDu = {
+                template: `
+                <div style= "background-color:yellowgreen;">
+                我是{{title}}
+                <cal :calTitle="title"></cal>
+                </div>
+            `,
+                data: function () {
+                    return {
+                        title: '百度'
+                    }
+                }
+            }
+
+            var App = {
+                components: {
+                   'xin-lang': XinLang,
+                   'bai-du': BaiDu,  
+                },
+                template: `
+                    <div>
+                        <xin-lang></xin-lang>
+                        <bai-du></bai-du>
+                    </div>
+                `
+            }
+
+            new Vue ({
+                el: '#app',
+                render: c=>c(App)
+            });
+    </script>
+</body>
+</html>
